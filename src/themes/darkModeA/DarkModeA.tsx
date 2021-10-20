@@ -34,6 +34,6 @@ const palette = {
   },
 };
 
-const themeName = "Brandon's Signature";
+const themeName = "Kannatron's Signature";
 
 export default createTheme({ palette, themeName });

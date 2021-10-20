@@ -2,14 +2,12 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PersonIcon from "@mui/icons-material/Person";
-import FolderIcon from "@mui/icons-material/Folder";
-import LightbulbIcon from "@mui/icons-material/Lightbulb";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import CottageIcon from "@mui/icons-material/CottageRounded";
+import CallSplitIcon from "@mui/icons-material/CallSplitRounded";
+import ChatIcon from "@mui/icons-material/ChatRounded";
+import PeopleIcon from "@mui/icons-material/PeopleRounded";
+import DashboardIcon from "@mui/icons-material/DashboardRounded";
+import RssFeedIcon from "@mui/icons-material/RssFeedRounded";
 
 function BottomNavBar() {
   const [value, setValue] = React.useState(0);
@@ -23,11 +21,12 @@ function BottomNavBar() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="About me" icon={<PersonIcon />} />
-        <BottomNavigationAction label="Projects" icon={<FolderIcon />} />
-        <BottomNavigationAction label="Experience" icon={<LightbulbIcon />} />
-        <BottomNavigationAction label="Education" icon={<MenuBookIcon />} />
-        <BottomNavigationAction label="Skills" icon={<FormatListBulletedIcon />} />
+        <BottomNavigationAction label="Hub" icon={<CottageIcon />} />
+        <BottomNavigationAction label="Breakouts" icon={<CallSplitIcon />} />
+        <BottomNavigationAction label="Chats" icon={<ChatIcon />} />
+        <BottomNavigationAction label="Friends" icon={<PeopleIcon />} />
+        <BottomNavigationAction label="Activity" icon={<DashboardIcon />} />
+        <BottomNavigationAction label="News" icon={<RssFeedIcon />} />
       </BottomNavigation>
     </Box>
   );
