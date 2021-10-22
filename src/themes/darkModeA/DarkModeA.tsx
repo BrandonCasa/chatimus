@@ -1,6 +1,9 @@
 import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
+  interface Theme {
+    notLoggedIn: string;
+  }
   interface ThemeOptions {
     [key: string]: any;
     themeName?: string;
