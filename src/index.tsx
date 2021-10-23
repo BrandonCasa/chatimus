@@ -10,14 +10,18 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import DarkModeA from "./themes/darkModeA/DarkModeA";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
+    <ThemeProvider theme={DarkModeA}>
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

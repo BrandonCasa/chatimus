@@ -1,15 +1,5 @@
 import { createTheme } from "@mui/material/styles";
 
-declare module "@mui/material/styles" {
-  interface Theme {
-    notLoggedIn: string;
-  }
-  interface ThemeOptions {
-    [key: string]: any;
-    themeName?: string;
-  }
-}
-
 const palette = {
   divider: "#1e1e1e",
   background: {
@@ -37,6 +27,12 @@ const palette = {
   },
 };
 
-const themeName = "Kannatron's Signature";
+// Create a MUI theme instance.
+const themeDarkModeA = createTheme({
+  palette,
+  typography: {
+    fontFamily: "Roboto, sans-serif",
+  },
+});
 
-export default createTheme({ palette, themeName });
+export default themeDarkModeA;

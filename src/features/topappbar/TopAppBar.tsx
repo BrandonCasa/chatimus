@@ -3,9 +3,8 @@ import AvatarTemplate from "../../avatarTemplate.jpg";
 import "./TopAppBar.scss";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setCurrentAccount, Account, setLoggedIn } from "../../app/accounts/accountsSlice";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import { AccountCircleRounded, NoAccountsRounded, AddCircleOutlineRounded, PersonOffRounded, LockRounded, LockOpenRounded } from "@mui/icons-material";
-import { ListItemText, Divider, AppBar, Avatar, Box, ButtonBase, IconButton, MenuItem, Toolbar, Typography, Menu } from "@mui/material";
+import { ListItemText, Divider, AppBar, Avatar, Box, ButtonBase, IconButton, MenuItem, Toolbar, Typography, Menu, ListItemIcon } from "@mui/material";
 
 interface AccountsButtonProps {
   accounts: Account[];
