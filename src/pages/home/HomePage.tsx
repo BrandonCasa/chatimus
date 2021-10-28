@@ -20,7 +20,7 @@ interface HomePageProps {}
 function HomePage(props: HomePageProps) {
   return (
     <div className="HomePage">
-      <Paper sx={{ overflow: "hidden" }}>
+      <Paper sx={{ overflow: "hidden", maxWidth: 600 }}>
         {/* A toolbar with a title saying "Notifications" and a delete icon button */}
         <AppBar color="secondary" position="static" elevation={0}>
           <Toolbar variant="dense" sx={{ justifyContent: "space-between" }}>
