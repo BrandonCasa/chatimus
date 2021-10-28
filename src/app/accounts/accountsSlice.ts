@@ -56,7 +56,7 @@ const initialState: AccountsState = {
           pfpBase64: "",
         },
         accState: {
-          loggedIn: false,
+          loggedIn: true,
           status: 0,
         },
       },
@@ -70,6 +70,11 @@ export const accountsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    // Add a reducer that will change the profile picture of the currently selected account
+    setPfp: (state, action: PayloadAction<string>) => {
+      state.data.accounts[state.data.currAccount].accInfo.pfpBase64 = action.payload;
+      state.data.accounts[state.data.currAccount].accInfo.hasPfp = true;
+    },
     addAccount: (state, action: PayloadAction<Account>) => {
       state.data.accounts.push(action.payload);
     },
@@ -80,10 +85,9 @@ export const accountsSlice = createSlice({
       state.data.accounts.splice(action.payload, 1);
     },
     setCurrentAccount: (state, action: PayloadAction<number>) => {
-      //if (state.data.accounts.length > action.payload) {
-      //  state.data.currAccount = action.payload;
-      //}
-      state.data.currAccount = action.payload;
+      if (state.data.accounts.length > action.payload) {
+        state.data.currAccount = action.payload;
+      }
     },
     setUsername: (state, action: PayloadAction<string>) => {
       state.data.accounts[state.data.currAccount].accInfo.username = action.payload;
