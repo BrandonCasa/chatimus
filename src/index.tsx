@@ -5,23 +5,21 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router } from "react-router-dom";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import DarkModeA from "./themes/darkModeA/DarkModeA";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline, StyledEngineProvider } from "@mui/material";
+import DarkModeA from "./themes/DarkModeA";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={DarkModeA}>
+    <StyledEngineProvider injectFirst>
       <Provider store={store}>
-        <Router>
-          <App />
-        </Router>
+        <App />
       </Provider>
-    </ThemeProvider>
+    </StyledEngineProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -27,9 +27,36 @@ const palette = {
   },
 };
 
+const components = {
+  MuiList: {
+    styleOverrides: {
+      root: {
+        "::-webkit-scrollbar": {
+          height: 13,
+          width: 13,
+        },
+        "::-webkit-scrollbar-thumb": {
+          background: "#b3afb3",
+          borderRadius: 9,
+        },
+        "::-webkit-scrollbar-thumb:hover": {
+          background: "#b3afb3",
+        },
+        "::-webkit-scrollbar-track": {
+          background: "#373737",
+          borderRadius: 9,
+          boxShadow: "inset 0px 0px 0px 0px #f0f0f0",
+          margin: 8,
+        },
+      },
+    },
+  },
+};
+
 // Create a MUI theme instance.
 const themeDarkModeA = createTheme({
   palette,
+  components,
   typography: {
     fontFamily: "Roboto, sans-serif",
   },

@@ -15,9 +15,7 @@ function Notification() {
   );
 }
 
-interface HomePageProps {
-  theTheme: AppTheme;
-}
+interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
   return (
@@ -37,7 +35,6 @@ function HomePage(props: HomePageProps) {
           sx={{
             maxHeight: 450,
             overflow: "auto",
-            ...props.theTheme.components.compList,
           }}
         >
           {/* A list item with an avatar and text */}
