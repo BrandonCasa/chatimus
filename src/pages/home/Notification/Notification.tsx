@@ -13,16 +13,12 @@ function Notification(props: NotificationProps) {
   return (
     <ListItem
       secondaryAction={
-        <ButtonGroup variant="contained" color="secondary">
+        <ButtonGroup variant="outlined" color="secondary">
           <Button>
-            <Badge badgeContent={<DeleteRounded color="action" />} className="TheBadge">
-              <Checkbox sx={{ padding: 0 }} />
-            </Badge>
+            <Checkbox sx={{ padding: 0, pointerEvents: "none" }} />
           </Button>
           <Button>
-            <Badge badgeContent={<WatchLaterRounded color="action" />} className="TheBadge">
-              <Checkbox sx={{ padding: 0 }} />
-            </Badge>
+            <Checkbox sx={{ padding: 0, pointerEvents: "none" }} />
           </Button>
         </ButtonGroup>
       }
