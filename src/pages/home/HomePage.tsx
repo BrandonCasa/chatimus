@@ -1,6 +1,6 @@
 import React from "react";
-import { DeleteRounded, FolderRounded } from "@mui/icons-material";
-import { Stack, Chip, Paper, Avatar, Typography, IconButton, List, ListItem, ListItemAvatar, ListItemText, AppBar, Toolbar, Theme, makeStyles, createStyles } from "@mui/material";
+import { DeleteRounded, WatchLaterRounded } from "@mui/icons-material";
+import { ButtonGroup, Button, Stack, Chip, Paper, Avatar, Typography, IconButton, List, ListItem, ListItemAvatar, ListItemText, AppBar, Toolbar, Theme, makeStyles, createStyles } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import "./HomePage.scss";
 import AppTheme from "../../AppTheme";
@@ -21,9 +21,14 @@ function HomePage(props: HomePageProps) {
               <Chip label="@Roles" variant="outlined" />
               <Chip label="@Me" variant="outlined" />
             </Stack>
-            <IconButton>
-              <DeleteRounded />
-            </IconButton>
+            <ButtonGroup variant="contained" style={{ marginRight: 12 }}>
+              <Button>
+                <DeleteRounded color="action" />
+              </Button>
+              <Button>
+                <WatchLaterRounded color="action" />
+              </Button>
+            </ButtonGroup>
           </Toolbar>
         </AppBar>
         {/* A list of notifications */}

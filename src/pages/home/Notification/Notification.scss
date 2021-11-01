@@ -1,0 +1,12 @@
+$primary-color: #c62828;
+
+.TheBadge {
+  .MuiBadge-badge {
+    padding: 2px;
+    background-color: rgba(#000, 0);
+
+    .MuiSvgIcon-root {
+      color: rgba(#fff, 1);
+    }
+  }
+}
