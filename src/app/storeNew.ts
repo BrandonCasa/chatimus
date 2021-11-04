@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import accountsReducer from "./accounts/accountsSlice";
+import notificationsReducer from "./notifications/notificationsSlice";
 
 const store = configureStore({
   reducer: {
     accountsData: accountsReducer,
+    notifications: notificationsReducer,
   },
 });
 
