@@ -60,7 +60,7 @@ const initialState: NotificationsState = {
 };
 
 export const notificationsSlice = createSlice({
-  name: "accounts",
+  name: "notifications",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -71,6 +71,6 @@ export const notificationsSlice = createSlice({
 export const {} = notificationsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectAccounts = (state: RootState) => state.notifications.data;
+export const selectNotifications = (state: RootState) => state.notifications.data;
 
 export default notificationsSlice.reducer;
