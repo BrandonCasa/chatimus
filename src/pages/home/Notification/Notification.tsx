@@ -6,6 +6,35 @@ import "./Notification.scss";
 function DeleteCheckbox() {
   return <Checkbox sx={{ padding: 0 }} />;
 }
+// Chunk text into pieces based on color, hyperlink, etc.
+const messageStructure = [
+  {
+    senderUserID: "",
+    senderChatID: "",
+    senderChatChannelID: "",
+    senderTime: "",
+    messageContent: {
+      media: [],
+      text: [
+        {
+          textPosition: 0,
+          isHyperlink: false,
+          url: "",
+          urlText: "",
+          color: "",
+        },
+      ],
+      code: [
+        {
+          textPosition: 0,
+          language: "",
+        },
+      ],
+    },
+    messageNotifType: "",
+    keywords: [],
+  },
+];
 
 interface NotificationProps {}
 
