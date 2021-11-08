@@ -39,7 +39,7 @@ function HomePage(props: HomePageProps) {
   const currentAccount = useAppSelector((state) => state.accounts.data.currAccount);
   const [showAllBool, setShowAllBool] = useState(false);
 
-  async function addNotificationTEST() {
+  function addNotificationTEST() {
     const notif = {
       senderInfo: {
         senderUserID: "1",
