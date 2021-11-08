@@ -42,14 +42,9 @@ function Notification(props: NotificationProps) {
   return (
     <ListItem
       secondaryAction={
-        <ButtonGroup variant="outlined" color="secondary">
-          <Button>
-            <Checkbox sx={{ padding: 0, pointerEvents: "none" }} />
-          </Button>
-          <Button>
-            <Checkbox sx={{ padding: 0, pointerEvents: "none" }} />
-          </Button>
-        </ButtonGroup>
+        <Button variant="outlined" color="secondary">
+          <Checkbox sx={{ padding: 0, pointerEvents: "none" }} />
+        </Button>
       }
     >
       <ListItemAvatar>
