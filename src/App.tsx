@@ -40,7 +40,7 @@ class App extends React.Component {
               <Route path="/" exact>
                 {
                   // @ts-ignore
-                  this.state.dbLoaded.toString()
+                  //this.state.dbLoaded.toString()
                 }
                 <HomePage />
               </Route>
