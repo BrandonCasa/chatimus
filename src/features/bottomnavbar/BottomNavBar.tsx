@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import CottageIcon from "@mui/icons-material/CottageRounded";
-import CallSplitIcon from "@mui/icons-material/CallSplitRounded";
+import DnsIcon from "@mui/icons-material/DnsRounded";
 import ChatIcon from "@mui/icons-material/ChatRounded";
 import PeopleIcon from "@mui/icons-material/PeopleRounded";
 import DashboardIcon from "@mui/icons-material/DashboardRounded";
@@ -22,7 +22,7 @@ function BottomNavBar() {
         }}
       >
         <BottomNavigationAction label="Hub" icon={<CottageIcon />} />
-        <BottomNavigationAction label="Breakouts" icon={<CallSplitIcon />} />
+        <BottomNavigationAction label="Servers" icon={<DnsIcon />} />
         <BottomNavigationAction label="Chats" icon={<ChatIcon />} />
         <BottomNavigationAction label="Friends" icon={<PeopleIcon />} />
         <BottomNavigationAction label="Activity" icon={<DashboardIcon />} />

@@ -105,6 +105,21 @@ function HomePage(props: HomePageProps) {
               return <div key={index} />;
             }
           })}
+          {showAllBool ? (
+            notifications.length === 0 ? (
+              <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
+                No New Notifications for Any Account
+              </Typography>
+            ) : null
+          ) : notifications.length === 0 ? (
+            <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
+              No New Notifications for Any Account
+            </Typography>
+          ) : notifications.filter((e) => e.owner === currentAccount).length === 0 ? (
+            <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
+              No New Notifications for Current Account
+            </Typography>
+          ) : null}
         </List>
       </Paper>
     </div>

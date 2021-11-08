@@ -57,7 +57,7 @@ function Notification(props: NotificationProps) {
       <ListItemAvatar>
         <Avatar>N</Avatar>
       </ListItemAvatar>
-      <ListItemText primary={props.info.messageContent.text[0].text} secondary={props.showAccount ? showAccountName : ""} />
+      <ListItemText primary={props.info.messageContent.text[0].text} secondary={"From: " + props.info.senderInfo.senderUserID + (props.showAccount ? ", To: " + showAccountName : "")} />
     </ListItem>
   );
 }
