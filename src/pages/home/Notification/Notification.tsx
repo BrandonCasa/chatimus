@@ -1,6 +1,8 @@
 import { DeleteRounded, WatchLaterRounded } from "@mui/icons-material";
 import { Avatar, Badge, Button, ButtonGroup, Checkbox, ListItem, ListItemAvatar, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material";
 import React from "react";
+import { useAppSelector } from "../../../app/hooks";
+import { Notification as NotificationType } from "../../../app/notifications/notificationsSlice";
 import "./Notification.scss";
 
 function DeleteCheckbox() {
@@ -36,9 +38,14 @@ const messageStructure = [
   },
 ];
 
-interface NotificationProps {}
+interface NotificationProps {
+  info: NotificationType;
+  showAccount: boolean;
+}
 
 function Notification(props: NotificationProps) {
+  const accounts = useAppSelector((state) => state.accounts.data);
+  const showAccountName = accounts.accounts.find((account) => account.accInfo.uniqueId === props.info.owner)?.accInfo.username;
   return (
     <ListItem
       secondaryAction={
@@ -50,7 +57,7 @@ function Notification(props: NotificationProps) {
       <ListItemAvatar>
         <Avatar>N</Avatar>
       </ListItemAvatar>
-      <ListItemText primary="Notification" />
+      <ListItemText primary={props.info.messageContent.text[0].text} secondary={props.showAccount ? showAccountName : ""} />
     </ListItem>
   );
 }

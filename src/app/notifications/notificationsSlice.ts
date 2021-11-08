@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 export interface MediaItem {
@@ -19,6 +19,7 @@ export interface CodeBlockItem {
 
 export interface TextItem {
   textPosition: number;
+  text: string;
   isHyperlink: boolean;
   hyperlinkUrl: string;
   hyperlinkText: string;
@@ -41,6 +42,7 @@ export interface SenderInfo {
 export interface Notification {
   senderInfo: SenderInfo;
   messageContent: MessageContent;
+  owner: number;
 }
 
 export interface NotificationsData {
@@ -64,11 +66,14 @@ export const notificationsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    // Add a reducer that will change the profile picture of the currently selected account
+    addNotification: (state, action: PayloadAction<Notification>) => {
+      state.data.notifications.push(action.payload);
+      return;
+    },
   },
 });
 
-export const {} = notificationsSlice.actions;
+export const { addNotification } = notificationsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectNotifications = (state: RootState) => state.notifications.data;

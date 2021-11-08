@@ -6,7 +6,7 @@ import notificationsReducer from "./notifications/notificationsSlice";
 const store = configureStore({
   reducer: {
     accountsData: accountsReducer,
-    notifications: notificationsReducer,
+    notificationsData: notificationsReducer,
   },
 });
 
