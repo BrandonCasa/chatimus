@@ -32,7 +32,8 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start-17": "react-scripts --openssl-legacy-provider start",
+    "start-16": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

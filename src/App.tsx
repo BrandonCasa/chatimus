@@ -1,14 +1,11 @@
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
-import HomePage from "./pages/home/HomePage";
-import TopAppBar from "./features/topappbar/TopAppBar";
-import BottomNavBar from "./features/bottomnavbar/BottomNavBar";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.scss";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
-import { useAppSelector, useAppDispatch } from "./app/hooks";
-import { setCurrentAccount } from "./app/accounts/accountsSlice";
-import { CssBaseline, StyledEngineProvider } from "@mui/material";
-import { Provider, useSelector } from "react-redux";
+import BottomNavBar from "./features/bottomnavbar/BottomNavBar";
+import TopAppBar from "./features/topappbar/TopAppBar";
+import HomePage from "./pages/home/HomePage";
 import themeDarkModeA from "./themes/DarkModeA";
 
 class App extends React.Component {
