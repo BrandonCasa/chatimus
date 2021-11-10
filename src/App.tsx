@@ -38,15 +38,16 @@ class App extends React.Component {
             </header>
             <main style={{ padding: 8, flexGrow: 1 }}>
               <Route path="/" exact>
+                Welcome to Chatimus
+              </Route>
+              <Route path="/hub" exact>
                 {
                   // @ts-ignore
                   //this.state.dbLoaded.toString()
                 }
                 <HomePage />
               </Route>
-              <Route path="/skillchat" exact>
-                Chatimus
-              </Route>
+              <Route path="/servers" exact></Route>
             </main>
             <footer>
               <BottomNavBar />
