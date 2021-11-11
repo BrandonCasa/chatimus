@@ -31,15 +31,6 @@ function LoginAnonymouslyDialog() {
       </DialogContent>
       <DialogActions>
         <Button onClick={loginAnonymously}>Finish</Button>
-        <Button
-          onClick={() => {
-            const cookies = new Cookies();
-            cookies.remove("anonymousAccountExists");
-            cookies.remove("anonymousUUID");
-          }}
-        >
-          Remove Users
-        </Button>
       </DialogActions>
     </Dialog>
   );

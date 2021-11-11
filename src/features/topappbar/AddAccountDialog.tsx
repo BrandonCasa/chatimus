@@ -6,6 +6,7 @@ import { createAccount } from "../../app/accounts/accountsSlice";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, ButtonGroup, DialogActions, Button } from "@mui/material";
 import TopAppBar from "./TopAppBar";
 import GoogleButton from "react-google-button";
+import Cookies from "universal-cookie";
 
 function AddAccountDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.addAccountDialogOpen);
@@ -13,7 +14,12 @@ function AddAccountDialog() {
 
   const loginAnonymously = () => {
     dispatch(setAddAccountDialogOpen(false));
-    dispatch(setLoginAnonymouslyDialogOpen(true));
+    const cookies = new Cookies();
+    if (cookies.get("anonymousAccountExists")) {
+      // Proceed to add the account to the list as it already exists
+    } else {
+      dispatch(setLoginAnonymouslyDialogOpen(true));
+    }
   };
 
   return (
@@ -31,7 +37,18 @@ function AddAccountDialog() {
         </ButtonGroup>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => dispatch(setAddAccountDialogOpen(false))}>Cancel</Button>
+        <Button
+          onClick={() => {
+            const cookies = new Cookies();
+            cookies.remove("anonymousAccountExists");
+            cookies.remove("anonymousUUID");
+          }}
+        >
+          Remove Stored Anonymous Account
+        </Button>
+        <Button onClick={() => dispatch(setAddAccountDialogOpen(false))} variant="contained">
+          Cancel
+        </Button>
       </DialogActions>
     </Dialog>
   );
