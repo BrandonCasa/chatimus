@@ -6,6 +6,7 @@ import { createAccount } from "../../app/accounts/accountsSlice";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, ButtonGroup, DialogActions, Button, TextField } from "@mui/material";
 import TopAppBar from "./TopAppBar";
 import GoogleButton from "react-google-button";
+import Cookies from "universal-cookie";
 
 function LoginAnonymouslyDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);
@@ -30,6 +31,15 @@ function LoginAnonymouslyDialog() {
       </DialogContent>
       <DialogActions>
         <Button onClick={loginAnonymously}>Finish</Button>
+        <Button
+          onClick={() => {
+            const cookies = new Cookies();
+            cookies.remove("anonymousAccountExists");
+            cookies.remove("anonymousUUID");
+          }}
+        >
+          Remove Users
+        </Button>
       </DialogActions>
     </Dialog>
   );

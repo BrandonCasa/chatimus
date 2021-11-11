@@ -113,26 +113,32 @@ export const accountsSlice = createSlice({
     },
     createAccount: (state, action: PayloadAction<AccountRequest>) => {
       const newAcc = {
-        accInfo: {
-          accType: action.payload.accType,
-          username: action.payload.username,
-          email: action.payload.email || "",
-          passSalt: action.payload.passSalt || "",
-          passHash: action.payload.passHash || "",
-          uuid: "",
-        },
+        accType: action.payload.accType,
+        username: action.payload.username,
+        email: action.payload.email || "",
+        passSalt: action.payload.passSalt || "",
+        passHash: action.payload.passHash || "",
+        uuid: "",
       };
-      axios.post(`http://3.84.114.16:3000/api/accounts/create`, newAcc).then((res) => {
-        const cookies = new Cookies();
-        if (cookies.get("anonymousAccountExists")) {
-          // Proceed to add the account to the list as it already exists
-          console.log(cookies.get("anonymousUUID"));
+      const cookies = new Cookies();
+      if (cookies.get("anonymousAccountExists")) {
+        // Proceed to add the account to the list as it already exists
+        console.log(cookies.get("anonymousUUID"));
+        return;
+      } else {
+        axios.post(`http://3.84.114.16:3000/api/accounts/create`, newAcc).then((res) => {
+          if (cookies.get("anonymousAccountExists")) {
+            // Proceed to add the account to the list as it already exists
+            console.log(cookies.get("anonymousUUID"));
+            return;
+          }
+          console.log(res.data);
+          cookies.set("anonymousAccountExists", true);
+          cookies.set("anonymousUUID", res.data.uuid);
+          console.log("Saved New User");
           return;
-        }
-        cookies.set("anonymousAccountExists", true);
-        cookies.set("anonymousUUID", res.data.uuid);
-        console.log("Saved New User");
-      });
+        });
+      }
     },
   },
 });
