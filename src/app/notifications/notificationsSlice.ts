@@ -76,6 +76,6 @@ export const notificationsSlice = createSlice({
 export const { addNotification } = notificationsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectNotifications = (state: RootState) => state.notifications.data;
+//export const selectNotifications = (state: RootState) => state.notifications.data;
 
 export default notificationsSlice.reducer;

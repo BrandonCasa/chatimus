@@ -5,6 +5,9 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setCurrentAccount, Account, setLoggedIn } from "../../app/accounts/accountsSlice";
 import { AccountCircleRounded, NoAccountsRounded, AddCircleOutlineRounded, PersonOffRounded, LockRounded, LockOpenRounded } from "@mui/icons-material";
 import { ListItemText, Divider, AppBar, Avatar, Box, ButtonBase, IconButton, MenuItem, Toolbar, Typography, Menu, ListItemIcon } from "@mui/material";
+import AddAccountDialog from "./AddAccountDialog";
+import LoginAnonymouslyDialog from "./LoginAnonymouslyDialog";
+import { setAddAccountDialogOpen } from "../../app/appstate/appSlice";
 
 interface AccountsButtonProps {
   accounts: Account[];
@@ -70,7 +73,7 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
         );
       })}
       {props.accounts.length === 0 ? (
-        <MenuItem>
+        <MenuItem onClick={() => dispatch(setAddAccountDialogOpen(true))}>
           <ListItemIcon>
             <AddCircleOutlineRounded color="secondary" fontSize="small" />
           </ListItemIcon>
@@ -79,7 +82,7 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
       ) : null}
       {props.accounts.length > 0 ? <Divider /> : null}
       {props.accounts.length > 0 ? (
-        <MenuItem>
+        <MenuItem onClick={() => dispatch(setAddAccountDialogOpen(true))}>
           <ListItemIcon>
             <AddCircleOutlineRounded color="secondary" fontSize="small" />
           </ListItemIcon>
@@ -166,6 +169,8 @@ function TopAppBar() {
             Chatimus
           </Typography>
           <AccountsButton accounts={accounts} currAccount={currAccount} />
+          <LoginAnonymouslyDialog />
+          <AddAccountDialog />
         </Toolbar>
       </AppBar>
     </Box>

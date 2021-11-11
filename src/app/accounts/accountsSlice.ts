@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
+import axios from "axios";
+import Cookies from "universal-cookie";
 
 export interface AccountInfo {
   username: string;
@@ -17,6 +19,14 @@ export interface AccountState {
 export interface Account {
   accInfo: AccountInfo;
   accState: AccountState;
+}
+
+export interface AccountRequest {
+  accType: string;
+  username: string;
+  email?: string;
+  passSalt?: string;
+  passHash?: string;
 }
 
 export interface AccountsData {
@@ -101,12 +111,35 @@ export const accountsSlice = createSlice({
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.data.accounts[state.data.currAccount].accState.loggedIn = action.payload;
     },
+    createAccount: (state, action: PayloadAction<AccountRequest>) => {
+      const newAcc = {
+        accInfo: {
+          accType: action.payload.accType,
+          username: action.payload.username,
+          email: action.payload.email || "",
+          passSalt: action.payload.passSalt || "",
+          passHash: action.payload.passHash || "",
+          uuid: "",
+        },
+      };
+      axios.post(`http://3.84.114.16:3000/api/accounts/create`, newAcc).then((res) => {
+        const cookies = new Cookies();
+        if (cookies.get("anonymousAccountExists")) {
+          // Proceed to add the account to the list as it already exists
+          console.log(cookies.get("anonymousUUID"));
+          return;
+        }
+        cookies.set("anonymousAccountExists", true);
+        cookies.set("anonymousUUID", res.data.uuid);
+        console.log("Saved New User");
+      });
+    },
   },
 });
 
-export const { addAccount, removeAccount, setCurrentAccount, setUsername, setEmail, setStatus, setLoggedIn } = accountsSlice.actions;
+export const { addAccount, removeAccount, setCurrentAccount, setUsername, setEmail, setStatus, setLoggedIn, createAccount } = accountsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectAccounts = (state: RootState) => state.accounts.data;
+//export const selectAccounts = (state: RootState) => state.accounts.data;
 
 export default accountsSlice.reducer;
