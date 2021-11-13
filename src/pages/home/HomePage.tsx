@@ -31,13 +31,43 @@ import { addNotification, Notification as NotificationType } from "../../app/not
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { SwitchBaseProps } from "@mui/material/internal/SwitchBase";
 import { refreshServerIp } from "../../app/appstate/appSlice";
+import axios from "axios";
 
 interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
   const dispatch = useAppDispatch();
 
-  dispatch(refreshServerIp());
+  /*
+  axios
+        .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
+        .then(function (response) {
+          state.data.currentServerIp = response.data;
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          state.data.currentServerIp = "";
+          console.log(error);
+        })
+        .then(function () {
+          // always executed
+          console.log("lol");
+        });*/
+  React.useEffect(() => {
+    axios
+      .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
+      .then(function (response) {
+        dispatch(refreshServerIp(response.data));
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        dispatch(refreshServerIp(""));
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+  }, []);
 
   const notifications = useAppSelector((state) => state.notifications.data.notifications);
   const currentAccount = useAppSelector((state) => state.accounts.data.currAccount);

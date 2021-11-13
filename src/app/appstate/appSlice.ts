@@ -35,19 +35,8 @@ export const notificationsSlice = createSlice({
       state.data.loginAnonymouslyDialogOpen = action.payload;
       return;
     },
-    refreshServerIp: (state) => {
-      axios
-        .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
-        .then(function (response) {
-          state.data.currentServerIp = response.data;
-        })
-        .catch(function (error) {
-          state.data.currentServerIp = "";
-          console.log(error);
-        })
-        .then(function () {
-          // always executed
-        });
+    refreshServerIp: (state, action: PayloadAction<string>) => {
+      state.data.currentServerIp = action.payload;
       return;
     },
   },
