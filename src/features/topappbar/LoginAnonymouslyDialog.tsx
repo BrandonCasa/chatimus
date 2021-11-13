@@ -10,11 +10,12 @@ import Cookies from "universal-cookie";
 
 function LoginAnonymouslyDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);
+  const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
   const [username, setUsername] = React.useState("");
   const dispatch = useAppDispatch();
 
   const loginAnonymously = () => {
-    dispatch(createAccount({ accType: "anonymous", username: username }));
+    dispatch(createAccount({ accType: "anonymous", username: username, serverIp: serverIp }));
     dispatch(setLoginAnonymouslyDialogOpen(false));
   };
 

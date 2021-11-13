@@ -24,6 +24,7 @@ export interface Account {
 export interface AccountRequest {
   accType: string;
   username: string;
+  serverIp: string;
   email?: string;
   passSalt?: string;
   passHash?: string;
@@ -126,7 +127,7 @@ export const accountsSlice = createSlice({
         console.log(cookies.get("anonymousUUID"));
         return;
       } else {
-        axios.post(`http://3.84.114.16:3000/api/accounts/create`, newAcc).then((res) => {
+        axios.post(`http://${action.payload.serverIp}:3000/api/accounts/create`, newAcc).then((res) => {
           if (cookies.get("anonymousAccountExists")) {
             // Proceed to add the account to the list as it already exists
             console.log(cookies.get("anonymousUUID"));

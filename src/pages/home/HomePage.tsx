@@ -30,11 +30,15 @@ import { createAction } from "@reduxjs/toolkit";
 import { addNotification, Notification as NotificationType } from "../../app/notifications/notificationsSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { SwitchBaseProps } from "@mui/material/internal/SwitchBase";
+import { refreshServerIp } from "../../app/appstate/appSlice";
 
 interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
   const dispatch = useAppDispatch();
+
+  dispatch(refreshServerIp());
+
   const notifications = useAppSelector((state) => state.notifications.data.notifications);
   const currentAccount = useAppSelector((state) => state.accounts.data.currAccount);
   const [showAllBool, setShowAllBool] = useState(false);
