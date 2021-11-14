@@ -81,7 +81,8 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
       status: 0,
     },
   };
-  dispatch(addAccount(newUser));
+  await dispatch(addAccount(newUser));
+  await dispatch(setCurrentAccount(payload.numAccounts));
   return;
 });
 
@@ -105,7 +106,8 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
       status: 0,
     },
   };
-  dispatch(addAccount(existingUser));
+  await dispatch(addAccount(existingUser));
+  await dispatch(setCurrentAccount(payload.numAccounts));
   return;
 });
 

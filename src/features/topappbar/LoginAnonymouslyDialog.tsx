@@ -11,11 +11,12 @@ import Cookies from "universal-cookie";
 function LoginAnonymouslyDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);
   const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
+  const accounts = useAppSelector((state) => state.accounts.data.accounts);
   const [username, setUsername] = React.useState("");
   const dispatch = useAppDispatch();
 
   const loginAnonymously = () => {
-    dispatch(createAccountAsync({ accType: "anonymous", username: username, serverIp: serverIp, hasPfp: false, pfpBase64: "", email: "", passSalt: "", passHash: "" }));
+    dispatch(createAccountAsync({ accType: "anonymous", username: username, serverIp: serverIp, hasPfp: false, pfpBase64: "", email: "", passSalt: "", passHash: "", numAccounts: accounts.length }));
     dispatch(setLoginAnonymouslyDialogOpen(false));
   };
 

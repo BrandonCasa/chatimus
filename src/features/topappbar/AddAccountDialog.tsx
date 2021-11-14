@@ -11,6 +11,7 @@ import Cookies from "universal-cookie";
 function AddAccountDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.addAccountDialogOpen);
   const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
+  const accounts = useAppSelector((state) => state.accounts.data.accounts);
   const dispatch = useAppDispatch();
 
   const loginAnonymously = () => {
@@ -21,6 +22,7 @@ function AddAccountDialog() {
       const data = {
         serverIp: serverIp,
         uuid: cookies.get("anonymousUUID"),
+        numAccounts: accounts.length,
       };
       dispatch(getExistingAccountAsync(data));
     } else {
