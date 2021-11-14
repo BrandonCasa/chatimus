@@ -123,7 +123,13 @@ export const accountsSlice = createSlice({
     },
     addAccount: (state, action: PayloadAction<Account>) => {
       console.log(action.payload);
-      state.data.accounts.push(action.payload);
+      let foundAcc = state.data.accounts.find((acc) => acc.accInfo.uuid === action.payload.accInfo.uuid);
+      if (foundAcc === undefined) {
+        state.data.accounts.push(action.payload);
+      } else {
+        state.data.currAccount = state.data.accounts.indexOf(foundAcc);
+        state.data.accounts[state.data.accounts.indexOf(foundAcc)].accState.loggedIn = true;
+      }
     },
     removeAccount: (state, action: PayloadAction<number>) => {
       if (state.data.currAccount === action.payload) {

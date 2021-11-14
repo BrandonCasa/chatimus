@@ -31,28 +31,11 @@ import { addNotification, Notification as NotificationType } from "../../app/not
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { SwitchBaseProps } from "@mui/material/internal/SwitchBase";
 import { refreshServerIp } from "../../app/appstate/appSlice";
-import axios from "axios";
 
 interface HomePageProps {}
 
 function HomePage(props: HomePageProps) {
   const dispatch = useAppDispatch();
-
-  React.useEffect(() => {
-    axios
-      .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
-      .then(function (response) {
-        dispatch(refreshServerIp(response.data));
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        dispatch(refreshServerIp(""));
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
-  }, []);
 
   const notifications = useAppSelector((state) => state.notifications.data.notifications);
   const currentAccount = useAppSelector((state) => state.accounts.data.currAccount);
@@ -60,30 +43,32 @@ function HomePage(props: HomePageProps) {
   const [showAllBool, setShowAllBool] = useState(false);
 
   function addNotificationTEST() {
-    const notif = {
-      senderInfo: {
-        senderUserID: "1",
-        senderChatID: "-1",
-        senderChatChannelID: "-1",
-        senderTime: "1636388607",
-      },
-      messageContent: {
-        media: [],
-        text: [
-          {
-            textPosition: 0,
-            text: "Hello there!",
-            isHyperlink: false,
-            hyperlinkUrl: "",
-            hyperlinkText: "",
-            hyperlinkColorCode: "",
-          },
-        ],
-        codeBlocks: [],
-      },
-      owner: accountsList[currentAccount].accInfo.uuid,
-    };
-    dispatch(addNotification(notif));
+    if (currentAccount !== -1) {
+      const notif = {
+        senderInfo: {
+          senderUserID: "1",
+          senderChatID: "-1",
+          senderChatChannelID: "-1",
+          senderTime: "1636388607",
+        },
+        messageContent: {
+          media: [],
+          text: [
+            {
+              textPosition: 0,
+              text: "Hello there!",
+              isHyperlink: false,
+              hyperlinkUrl: "",
+              hyperlinkText: "",
+              hyperlinkColorCode: "",
+            },
+          ],
+          codeBlocks: [],
+        },
+        owner: accountsList[currentAccount].accInfo.uuid,
+      };
+      dispatch(addNotification(notif));
+    }
   }
 
   function showAllToggle(event: any) {
@@ -119,7 +104,7 @@ function HomePage(props: HomePageProps) {
           }}
         >
           {notifications.map((notif: NotificationType, index: number) => {
-            if (showAllBool || notif.owner === accountsList[currentAccount].accInfo.uuid) {
+            if (showAllBool || (currentAccount !== -1 && notif.owner === accountsList[currentAccount].accInfo.uuid)) {
               return <Notification key={index} info={notif} showAccount={showAllBool} />;
             } else {
               return <div key={index} />;
@@ -135,7 +120,7 @@ function HomePage(props: HomePageProps) {
             <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
               No New Notifications for Any Account
             </Typography>
-          ) : notifications.filter((e) => e.owner === accountsList[currentAccount].accInfo.uuid).length === 0 ? (
+          ) : currentAccount !== -1 && notifications.filter((e) => e.owner === accountsList[currentAccount].accInfo.uuid).length === 0 ? (
             <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
               No New Notifications for Current Account
             </Typography>
