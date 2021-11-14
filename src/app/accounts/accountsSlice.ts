@@ -62,7 +62,7 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
     pfpBase64: payload.pfpBase64,
   };
   const cookies = new Cookies();
-  let axiosResultA = await axios.post(`http://${payload.serverIp}:3000/api/accounts/create`, newAcc);
+  let axiosResultA = await axios.post(`https://selfrtx.com:3000/api/accounts/create`, newAcc);
   console.log(axiosResultA.data);
   cookies.set("anonymousAccountExists", true);
   cookies.set("anonymousUUID", axiosResultA.data.uuid);
@@ -88,7 +88,7 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
 
 export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAccountAsync", async (payload: any, { dispatch }) => {
   // @ts-ignore
-  let axiosResultA = await axios.get(`http://${payload.serverIp}:3000/api/accounts/get`, {
+  let axiosResultA = await axios.get(`https://selfrtx.com:3000/api/accounts/get`, {
     params: {
       uuid: payload.uuid,
     },
