@@ -40,7 +40,7 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
       dispatch(setLoggedIn(false));
       let shouldGoAnon = true;
       props.accounts.forEach((accountB: Account, index: number) => {
-        if (accountB.accState.loggedIn && accountB.accInfo.uniqueId !== accountA.accInfo.uniqueId) {
+        if (accountB.accState.loggedIn && accountB.accInfo.uuid !== accountA.accInfo.uuid) {
           shouldGoAnon = false;
           dispatch(setCurrentAccount(index));
         }
@@ -56,11 +56,7 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
     <Menu open={props.menuOpened} anchorEl={props.anchorEl} onClose={props.handleClose}>
       {props.accounts.map((account: Account, index: number) => {
         return (
-          <MenuItem
-            key={account.accInfo.uniqueId}
-            selected={props.currAccount !== -1 && account.accInfo.uniqueId === props.accounts[props.currAccount].accInfo.uniqueId}
-            onClick={() => clickAccount(account)}
-          >
+          <MenuItem key={account.accInfo.uuid} selected={props.currAccount !== -1 && account.accInfo.uuid === props.accounts[props.currAccount].accInfo.uuid} onClick={() => clickAccount(account)}>
             <ListItemIcon>
               <AccountAvatar {...props} account={account} isNoneAllowed={false} />
             </ListItemIcon>

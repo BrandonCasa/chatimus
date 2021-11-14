@@ -2,7 +2,7 @@ import * as React from "react";
 import "./LoginAnonymouslyDialog.scss";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
-import { createAccount } from "../../app/accounts/accountsSlice";
+import { createAccountAsync } from "../../app/accounts/accountsSlice";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, ButtonGroup, DialogActions, Button, TextField } from "@mui/material";
 import TopAppBar from "./TopAppBar";
 import GoogleButton from "react-google-button";
@@ -15,7 +15,7 @@ function LoginAnonymouslyDialog() {
   const dispatch = useAppDispatch();
 
   const loginAnonymously = () => {
-    dispatch(createAccount({ accType: "anonymous", username: username, serverIp: serverIp }));
+    dispatch(createAccountAsync({ accType: "anonymous", username: username, serverIp: serverIp, hasPfp: false, pfpBase64: "", email: "", passSalt: "", passHash: "" }));
     dispatch(setLoginAnonymouslyDialogOpen(false));
   };
 

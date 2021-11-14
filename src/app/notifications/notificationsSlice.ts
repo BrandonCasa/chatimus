@@ -42,7 +42,7 @@ export interface SenderInfo {
 export interface Notification {
   senderInfo: SenderInfo;
   messageContent: MessageContent;
-  owner: number;
+  owner: string;
 }
 
 export interface NotificationsData {

@@ -2,7 +2,7 @@ import * as React from "react";
 import "./AddAccountDialog.scss";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
-import { createAccount } from "../../app/accounts/accountsSlice";
+import { getExistingAccountAsync } from "../../app/accounts/accountsSlice";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, ButtonGroup, DialogActions, Button } from "@mui/material";
 import TopAppBar from "./TopAppBar";
 import GoogleButton from "react-google-button";
@@ -10,6 +10,7 @@ import Cookies from "universal-cookie";
 
 function AddAccountDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.addAccountDialogOpen);
+  const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
   const dispatch = useAppDispatch();
 
   const loginAnonymously = () => {
@@ -17,6 +18,11 @@ function AddAccountDialog() {
     const cookies = new Cookies();
     if (cookies.get("anonymousAccountExists")) {
       // Proceed to add the account to the list as it already exists
+      const data = {
+        serverIp: serverIp,
+        uuid: cookies.get("anonymousUUID"),
+      };
+      dispatch(getExistingAccountAsync(data));
     } else {
       dispatch(setLoginAnonymouslyDialogOpen(true));
     }

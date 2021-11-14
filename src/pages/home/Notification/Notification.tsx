@@ -45,7 +45,7 @@ interface NotificationProps {
 
 function Notification(props: NotificationProps) {
   const accounts = useAppSelector((state) => state.accounts.data);
-  const showAccountName = accounts.accounts.find((account) => account.accInfo.uniqueId === props.info.owner)?.accInfo.username;
+  const showAccountName = accounts.accounts.find((account) => account.accInfo.uuid === props.info.owner)?.accInfo.username;
   return (
     <ListItem
       secondaryAction={

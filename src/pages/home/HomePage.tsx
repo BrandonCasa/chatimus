@@ -38,21 +38,6 @@ interface HomePageProps {}
 function HomePage(props: HomePageProps) {
   const dispatch = useAppDispatch();
 
-  /*
-  axios
-        .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
-        .then(function (response) {
-          state.data.currentServerIp = response.data;
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          state.data.currentServerIp = "";
-          console.log(error);
-        })
-        .then(function () {
-          // always executed
-          console.log("lol");
-        });*/
   React.useEffect(() => {
     axios
       .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
@@ -71,6 +56,7 @@ function HomePage(props: HomePageProps) {
 
   const notifications = useAppSelector((state) => state.notifications.data.notifications);
   const currentAccount = useAppSelector((state) => state.accounts.data.currAccount);
+  const accountsList = useAppSelector((state) => state.accounts.data.accounts);
   const [showAllBool, setShowAllBool] = useState(false);
 
   function addNotificationTEST() {
@@ -95,7 +81,7 @@ function HomePage(props: HomePageProps) {
         ],
         codeBlocks: [],
       },
-      owner: 0,
+      owner: accountsList[currentAccount].accInfo.uuid,
     };
     dispatch(addNotification(notif));
   }
@@ -133,7 +119,7 @@ function HomePage(props: HomePageProps) {
           }}
         >
           {notifications.map((notif: NotificationType, index: number) => {
-            if (showAllBool || notif.owner === currentAccount) {
+            if (showAllBool || notif.owner === accountsList[currentAccount].accInfo.uuid) {
               return <Notification key={index} info={notif} showAccount={showAllBool} />;
             } else {
               return <div key={index} />;
@@ -149,7 +135,7 @@ function HomePage(props: HomePageProps) {
             <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
               No New Notifications for Any Account
             </Typography>
-          ) : notifications.filter((e) => e.owner === currentAccount).length === 0 ? (
+          ) : notifications.filter((e) => e.owner === accountsList[currentAccount].accInfo.uuid).length === 0 ? (
             <Typography variant="subtitle1" sx={{ paddingLeft: "24px" }}>
               No New Notifications for Current Account
             </Typography>
