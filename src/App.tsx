@@ -19,28 +19,16 @@ function App() {
   const cookies = new Cookies();
 
   React.useEffect(() => {
-    axios
-      .get("http://ec2-54-226-61-67.compute-1.amazonaws.com:3000/ip")
-      .then(function (response) {
-        dispatch(refreshServerIp(response.data));
-        console.log(response.data);
-        if (cookies.get("anonymousAccountExists")) {
-          // Proceed to add the account to the list as it already exists
-          const data = {
-            serverIp: response.data,
-            uuid: cookies.get("anonymousUUID"),
-            numAccounts: accounts.length,
-          };
-          dispatch(getExistingAccountAsync(data));
-        }
-      })
-      .catch(function (error) {
-        dispatch(refreshServerIp(""));
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
+    dispatch(refreshServerIp("44.194.181.255"));
+    if (cookies.get("anonymousAccountExists")) {
+      // Proceed to add the account to the list as it already exists
+      const data = {
+        serverIp: "44.194.181.255",
+        uuid: cookies.get("anonymousUUID"),
+        numAccounts: accounts.length,
+      };
+      dispatch(getExistingAccountAsync(data));
+    }
   }, []);
 
   return (
