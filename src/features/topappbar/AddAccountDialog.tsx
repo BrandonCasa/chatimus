@@ -32,11 +32,8 @@ function AddAccountDialog() {
     <Dialog open={dialogOpen} onClose={(event) => dispatch(setAddAccountDialogOpen(false))}>
       <DialogTitle>Add a New Account</DialogTitle>
       <DialogContent>
-        <DialogContentText>Login to add a new account.</DialogContentText>
+        <DialogContentText>Select a way to login</DialogContentText>
         <ButtonGroup orientation="vertical">
-          <Button variant="contained" color="secondary">
-            Sign in/up with Email
-          </Button>
           <Button variant="contained" color="primary" onClick={loginAnonymously}>
             Sign in Anonymously
           </Button>
