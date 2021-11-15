@@ -1,13 +1,13 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import ChatIcon from "@mui/icons-material/ChatRounded";
+import CottageIcon from "@mui/icons-material/CottageRounded";
+import DashboardIcon from "@mui/icons-material/DashboardRounded";
+import DnsIcon from "@mui/icons-material/DnsRounded";
+import PeopleIcon from "@mui/icons-material/PeopleRounded";
+import RssFeedIcon from "@mui/icons-material/RssFeedRounded";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import CottageIcon from "@mui/icons-material/CottageRounded";
-import DnsIcon from "@mui/icons-material/DnsRounded";
-import ChatIcon from "@mui/icons-material/ChatRounded";
-import PeopleIcon from "@mui/icons-material/PeopleRounded";
-import DashboardIcon from "@mui/icons-material/DashboardRounded";
-import RssFeedIcon from "@mui/icons-material/RssFeedRounded";
+import Box from "@mui/material/Box";
+import * as React from "react";
 import { useHistory } from "react-router-dom";
 
 function BottomNavBar() {

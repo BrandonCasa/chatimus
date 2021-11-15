@@ -1,12 +1,10 @@
+import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import * as React from "react";
-import "./AddAccountDialog.scss";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
-import { getExistingAccountAsync } from "../../app/accounts/accountsSlice";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, ButtonGroup, DialogActions, Button } from "@mui/material";
-import TopAppBar from "./TopAppBar";
-import GoogleButton from "react-google-button";
 import Cookies from "universal-cookie";
+import { getExistingAccountAsync } from "../../app/accounts/accountsSlice";
+import { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import "./AddAccountDialog.scss";
 
 function AddAccountDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.addAccountDialogOpen);

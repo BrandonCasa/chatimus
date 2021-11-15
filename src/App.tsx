@@ -2,16 +2,15 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Cookies from "universal-cookie";
 import "./App.scss";
+import { getExistingAccountAsync } from "./app/accounts/accountsSlice";
+import { refreshServerIp } from "./app/appstate/appSlice";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import BottomNavBar from "./features/bottomnavbar/BottomNavBar";
 import TopAppBar from "./features/topappbar/TopAppBar";
 import HomePage from "./pages/home/HomePage";
 import themeDarkModeA from "./themes/DarkModeA";
-import Cookies from "universal-cookie";
-import axios from "axios";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { refreshServerIp, setLoginAnonymouslyDialogOpen } from "./app/appstate/appSlice";
-import { getExistingAccountAsync } from "./app/accounts/accountsSlice";
 
 function App() {
   const dispatch = useAppDispatch();

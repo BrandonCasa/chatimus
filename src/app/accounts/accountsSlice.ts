@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, store } from "../../app/store";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { useAppDispatch } from "../hooks";
 
 export interface AccountInfo {
   username: string;

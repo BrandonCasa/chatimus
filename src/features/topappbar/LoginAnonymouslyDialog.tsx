@@ -1,12 +1,9 @@
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import * as React from "react";
-import "./LoginAnonymouslyDialog.scss";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
 import { createAccountAsync } from "../../app/accounts/accountsSlice";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, ButtonGroup, DialogActions, Button, TextField } from "@mui/material";
-import TopAppBar from "./TopAppBar";
-import GoogleButton from "react-google-button";
-import Cookies from "universal-cookie";
+import { setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import "./LoginAnonymouslyDialog.scss";
 
 function LoginAnonymouslyDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);

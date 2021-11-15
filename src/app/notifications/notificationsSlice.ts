@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface MediaItem {
   isInline: boolean;

@@ -1,7 +1,7 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import accountsReducer from "./accounts/accountsSlice";
-import notificationsReducer from "./notifications/notificationsSlice";
 import appStateReducer from "./appstate/appSlice";
+import notificationsReducer from "./notifications/notificationsSlice";
 
 export const store = configureStore({
   reducer: {

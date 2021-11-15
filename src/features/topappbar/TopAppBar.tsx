@@ -1,13 +1,13 @@
+import { AddCircleOutlineRounded, LockOpenRounded, LockRounded, NoAccountsRounded } from "@mui/icons-material";
+import { AppBar, Avatar, Box, Button, ButtonBase, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import * as React from "react";
+import { Account, setCurrentAccount, setLoggedIn } from "../../app/accounts/accountsSlice";
+import { setAddAccountDialogOpen } from "../../app/appstate/appSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AvatarTemplate from "../../avatarTemplate.jpg";
-import "./TopAppBar.scss";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { setCurrentAccount, Account, setLoggedIn } from "../../app/accounts/accountsSlice";
-import { AccountCircleRounded, NoAccountsRounded, AddCircleOutlineRounded, PersonOffRounded, LockRounded, LockOpenRounded } from "@mui/icons-material";
-import { ListItemText, Divider, AppBar, Avatar, Box, ButtonBase, IconButton, MenuItem, Toolbar, Typography, Menu, ListItemIcon } from "@mui/material";
 import AddAccountDialog from "./AddAccountDialog";
 import LoginAnonymouslyDialog from "./LoginAnonymouslyDialog";
-import { setAddAccountDialogOpen } from "../../app/appstate/appSlice";
+import "./TopAppBar.scss";
 
 interface AccountsButtonProps {
   accounts: Account[];
@@ -142,11 +142,9 @@ function AccountsButton(props: AccountsButtonProps) {
 
   return (
     <React.Fragment>
-      <ButtonBase style={{ borderRadius: "50%" }} onClick={handleClick}>
-        <IconButton color="secondary" onClick={handleClick}>
-          {props.currAccount === -1 ? <AccountAvatar {...props} account={null} isNoneAllowed={true} /> : <AccountAvatar {...props} account={props.accounts[props.currAccount]} isNoneAllowed={false} />}
-        </IconButton>
-      </ButtonBase>
+      <IconButton color="secondary" onClick={handleClick} sx={{ paddingRight: 0 }}>
+        {props.currAccount === -1 ? <AccountAvatar {...props} account={null} isNoneAllowed={true} /> : <AccountAvatar {...props} account={props.accounts[props.currAccount]} isNoneAllowed={false} />}
+      </IconButton>
       <AccountDropdownMenu accounts={props.accounts} currAccount={props.currAccount} menuOpened={menuOpened} anchorEl={anchorEl} handleClose={handleClose} />
     </React.Fragment>
   );

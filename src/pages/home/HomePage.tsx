@@ -1,36 +1,10 @@
+import { DeleteRounded } from "@mui/icons-material";
+import { AppBar, Button, Checkbox, Chip, FormControlLabel, FormGroup, List, Paper, Stack, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { DeleteRounded, DoneAllRounded, WatchLaterRounded } from "@mui/icons-material";
-import {
-  ButtonGroup,
-  Button,
-  Stack,
-  Chip,
-  Paper,
-  Avatar,
-  Typography,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  AppBar,
-  Toolbar,
-  Theme,
-  makeStyles,
-  createStyles,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import "./HomePage.scss";
-import AppTheme from "../../AppTheme";
-import Notification from "./Notification/Notification";
-import { createAction } from "@reduxjs/toolkit";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { addNotification, Notification as NotificationType } from "../../app/notifications/notificationsSlice";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { SwitchBaseProps } from "@mui/material/internal/SwitchBase";
-import { refreshServerIp } from "../../app/appstate/appSlice";
+import "./HomePage.scss";
+import Notification from "./Notification/Notification";
 
 interface HomePageProps {}
 
