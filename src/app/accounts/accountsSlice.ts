@@ -60,6 +60,9 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
     hasPfp: payload.hasPfp,
     pfpBase64: payload.pfpBase64,
     selectedTheme: payload.selectedTheme,
+    secretQuestion: payload.secretQuestion,
+    secretSalt: payload.secretSalt,
+    secretHash: payload.secretHash,
   };
   const cookies = new Cookies();
   let axiosResultA;
