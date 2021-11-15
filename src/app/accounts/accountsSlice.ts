@@ -14,6 +14,7 @@ export interface AccountInfo {
 export interface AccountState {
   loggedIn: boolean;
   status: number;
+  selectedTheme: string;
 }
 
 export interface Account {
@@ -58,9 +59,15 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
     uuid: "",
     hasPfp: payload.hasPfp,
     pfpBase64: payload.pfpBase64,
+    selectedTheme: payload.selectedTheme,
   };
   const cookies = new Cookies();
-  let axiosResultA = await axios.post(`https://selfrtx.com:3000/api/accounts/create`, newAcc);
+  let axiosResultA;
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    axiosResultA = await axios.post(`http://selfrtx.com:3001/api/accounts/create`, newAcc);
+  } else {
+    axiosResultA = await axios.post(`https://selfrtx.com:3000/api/accounts/create`, newAcc);
+  }
   console.log(axiosResultA.data);
   cookies.set("anonymousAccountExists", true);
   cookies.set("anonymousUUID", axiosResultA.data.uuid);
@@ -77,6 +84,7 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
     accState: {
       loggedIn: true,
       status: 0,
+      selectedTheme: payload.selectedTheme,
     },
   };
   await dispatch(addAccount(newUser));
@@ -86,11 +94,20 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
 
 export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAccountAsync", async (payload: any, { dispatch }) => {
   // @ts-ignore
-  let axiosResultA = await axios.get(`https://selfrtx.com:3000/api/accounts/get`, {
-    params: {
-      uuid: payload.uuid,
-    },
-  });
+  let axiosResultA;
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+    axiosResultA = await axios.get(`http://selfrtx.com:3001/api/accounts/get`, {
+      params: {
+        uuid: payload.uuid,
+      },
+    });
+  } else {
+    axiosResultA = await axios.get(`https://selfrtx.com:3000/api/accounts/get`, {
+      params: {
+        uuid: payload.uuid,
+      },
+    });
+  }
   const existingUser: Account = {
     accInfo: {
       username: axiosResultA.data.username,
@@ -102,6 +119,7 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
     accState: {
       loggedIn: true,
       status: 0,
+      selectedTheme: axiosResultA.data.selectedTheme,
     },
   };
   await dispatch(addAccount(existingUser));

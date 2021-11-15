@@ -9,11 +9,27 @@ function LoginAnonymouslyDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);
   const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
   const accounts = useAppSelector((state) => state.accounts.data.accounts);
+  const currAccount = useAppSelector((state) => state.accounts.data.currAccount);
   const [username, setUsername] = React.useState("");
   const dispatch = useAppDispatch();
 
   const loginAnonymously = () => {
-    dispatch(createAccountAsync({ accType: "anonymous", username: username, serverIp: serverIp, hasPfp: false, pfpBase64: "", email: "", passSalt: "", passHash: "", numAccounts: accounts.length }));
+    let newAccInfo = {
+      accType: "anonymous",
+      username: username,
+      serverIp: serverIp,
+      hasPfp: false,
+      pfpBase64: "",
+      email: "",
+      passSalt: "",
+      passHash: "",
+      numAccounts: accounts.length,
+      selectedTheme: "default",
+    };
+    if (currAccount !== -1) {
+      newAccInfo.selectedTheme = accounts[currAccount].accState.selectedTheme;
+    }
+    dispatch(createAccountAsync(newAccInfo));
     dispatch(setLoginAnonymouslyDialogOpen(false));
   };
 
