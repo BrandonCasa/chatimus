@@ -29,6 +29,7 @@ function LoginAnonymouslyDialog() {
         username: username,
         secretQuestion: secretQuestion,
         secretAnswer: secretAnswer,
+        numAccounts: accounts.length,
       };
       setSecretQuestion("Select a Secret Question");
       setSecretAnswer("");
