@@ -43,7 +43,7 @@ function App() {
           </header>
           <main style={{ padding: 8, flexGrow: 1 }}>
             <Route path="/" exact>
-              Welcome to Chatimus
+              <HomePage />
             </Route>
             <Route path="/hub" exact>
               {
