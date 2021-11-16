@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface AppStateData {
   addAccountDialogOpen: boolean;
   loginAnonymouslyDialogOpen: boolean;
+  createAnonymousDialogOpen: boolean;
   currentServerIp: string;
 }
 
@@ -16,6 +17,7 @@ const initialState: AppState = {
   data: {
     addAccountDialogOpen: false,
     loginAnonymouslyDialogOpen: false,
+    createAnonymousDialogOpen: false,
     currentServerIp: "",
   },
 };
@@ -33,6 +35,10 @@ export const notificationsSlice = createSlice({
       state.data.loginAnonymouslyDialogOpen = action.payload;
       return;
     },
+    setCreateAnonymousDialogOpen: (state, action: PayloadAction<boolean>) => {
+      state.data.createAnonymousDialogOpen = action.payload;
+      return;
+    },
     refreshServerIp: (state, action: PayloadAction<string>) => {
       state.data.currentServerIp = action.payload;
       return;
@@ -40,6 +46,6 @@ export const notificationsSlice = createSlice({
   },
 });
 
-export const { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen, refreshServerIp } = notificationsSlice.actions;
+export const { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen, refreshServerIp, setCreateAnonymousDialogOpen } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

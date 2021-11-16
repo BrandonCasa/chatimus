@@ -54,14 +54,11 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
     accType: payload.accType,
     username: payload.username,
     email: payload.email,
-    passSalt: payload.passSalt,
     passHash: payload.passHash,
     uuid: "",
     hasPfp: payload.hasPfp,
     pfpBase64: payload.pfpBase64,
     selectedTheme: payload.selectedTheme,
-    secretQuestion: payload.secretQuestion,
-    secretSalt: payload.secretSalt,
     secretHash: payload.secretHash,
   };
   const cookies = new Cookies();
@@ -97,37 +94,79 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
 
 export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAccountAsync", async (payload: any, { dispatch }) => {
   // @ts-ignore
-  let axiosResultA;
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-    axiosResultA = await axios.get(`http://selfrtx.com:3001/api/accounts/get`, {
-      params: {
-        uuid: payload.uuid,
+  if (payload.method === "uuid") {
+    let axiosResultA;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+      axiosResultA = await axios.get(`http://selfrtx.com:3001/api/accounts/get/uuid`, {
+        params: {
+          accType: payload.accType,
+          uuid: payload.uuid,
+        },
+      });
+    } else {
+      axiosResultA = await axios.get(`https://selfrtx.com:3000/api/accounts/get/uuid`, {
+        params: {
+          accType: payload.accType,
+          uuid: payload.uuid,
+        },
+      });
+    }
+    const existingUser: Account = {
+      accInfo: {
+        username: axiosResultA.data.username,
+        uuid: axiosResultA.data.uuid,
+        email: axiosResultA.data.email,
+        hasPfp: axiosResultA.data.hasPfp,
+        pfpBase64: axiosResultA.data.pfpBase64,
       },
-    });
+      accState: {
+        loggedIn: true,
+        status: 0,
+        selectedTheme: axiosResultA.data.selectedTheme,
+      },
+    };
+    await dispatch(addAccount(existingUser));
+    await dispatch(setCurrentAccount(payload.numAccounts));
+    return;
   } else {
-    axiosResultA = await axios.get(`https://selfrtx.com:3000/api/accounts/get`, {
-      params: {
-        uuid: payload.uuid,
+    let axiosResultA;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+      axiosResultA = await axios.get(`http://selfrtx.com:3001/api/accounts/get/secret`, {
+        params: {
+          accType: payload.accType,
+          secretQuestion: payload.secretQuestion,
+          secretAnswer: payload.secretAnswer,
+          username: payload.username,
+        },
+      });
+    } else {
+      axiosResultA = await axios.get(`https://selfrtx.com:3000/api/accounts/get/secret`, {
+        params: {
+          accType: payload.accType,
+          secretQuestion: payload.secretQuestion,
+          secretAnswer: payload.secretAnswer,
+          username: payload.username,
+        },
+      });
+    }
+    const existingUser: Account = {
+      accInfo: {
+        username: axiosResultA.data.username,
+        uuid: axiosResultA.data.uuid,
+        email: axiosResultA.data.email,
+        hasPfp: axiosResultA.data.hasPfp,
+        pfpBase64: axiosResultA.data.pfpBase64,
       },
-    });
+      accState: {
+        loggedIn: true,
+        status: 0,
+        selectedTheme: axiosResultA.data.selectedTheme,
+      },
+    };
+    await dispatch(addAccount(existingUser));
+    await dispatch(setCurrentAccount(payload.numAccounts));
+    return;
   }
-  const existingUser: Account = {
-    accInfo: {
-      username: axiosResultA.data.username,
-      uuid: axiosResultA.data.uuid,
-      email: axiosResultA.data.email,
-      hasPfp: axiosResultA.data.hasPfp,
-      pfpBase64: axiosResultA.data.pfpBase64,
-    },
-    accState: {
-      loggedIn: true,
-      status: 0,
-      selectedTheme: axiosResultA.data.selectedTheme,
-    },
-  };
-  await dispatch(addAccount(existingUser));
-  await dispatch(setCurrentAccount(payload.numAccounts));
-  return;
 });
 
 export const accountsSlice = createSlice({
@@ -173,45 +212,6 @@ export const accountsSlice = createSlice({
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.data.accounts[state.data.currAccount].accState.loggedIn = action.payload;
     },
-    /*
-    createAccount: (state, action: PayloadAction<AccountRequest>) => {
-      const newAcc = {
-        accType: action.payload.accType,
-        username: action.payload.username,
-        email: action.payload.email || "",
-        passSalt: action.payload.passSalt || "",
-        passHash: action.payload.passHash || "",
-        uuid: "",
-      };
-      const cookies = new Cookies();
-      let newUUID = "";
-      axios
-        .post(`http://${action.payload.serverIp}:3000/api/accounts/create`, newAcc)
-        .then((res) => {
-          console.log(res.data);
-          cookies.set("anonymousAccountExists", true);
-          cookies.set("anonymousUUID", res.data.uuid);
-          newUUID = res.data.uuid;
-          console.log("Saved New User");
-        })
-        .finally(() => {
-          const newUser: Account = {
-            accInfo: {
-              username: action.payload.username,
-              uuid: newUUID,
-              email: "",
-              hasPfp: false,
-              pfpBase64: "",
-            },
-            accState: {
-              loggedIn: true,
-              status: 0,
-            },
-          };
-          return;
-        });
-    },
-    */
   },
   extraReducers: (builder) => {
     builder.addCase(createAccountAsync.fulfilled, (state, action) => {

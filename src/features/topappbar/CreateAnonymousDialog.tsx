@@ -1,13 +1,13 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField } from "@mui/material";
 import * as React from "react";
-import { createAccountAsync, getExistingAccountAsync } from "../../app/accounts/accountsSlice";
-import { setCreateAnonymousDialogOpen, setLoginAnonymouslyDialogOpen } from "../../app/appstate/appSlice";
+import { createAccountAsync } from "../../app/accounts/accountsSlice";
+import { setCreateAnonymousDialogOpen } from "../../app/appstate/appSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import "./LoginAnonymouslyDialog.scss";
+import "./CreateAnonymousDialog.scss";
 import crypto from "crypto-js";
 
-function LoginAnonymouslyDialog() {
-  const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);
+function CreateAnonymousDialog() {
+  const dialogOpen = useAppSelector((state) => state.appstate.data.createAnonymousDialogOpen);
   const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
   const accounts = useAppSelector((state) => state.accounts.data.accounts);
   const currAccount = useAppSelector((state) => state.accounts.data.currAccount);
@@ -21,19 +21,27 @@ function LoginAnonymouslyDialog() {
     // const bytes = crypto.AES.decrypt(hash, secretAnswer).toString(crypto.enc.Utf8);
   }
 
-  const loginAnonymously = () => {
+  const singupAnonymously = () => {
     if (secretQuestion !== "Select a Secret Question") {
-      const data = {
-        method: "secret",
+      let newAccInfo = {
         accType: "anonymous",
         username: username,
-        secretQuestion: secretQuestion,
-        secretAnswer: secretAnswer,
+        serverIp: serverIp,
+        hasPfp: false,
+        pfpBase64: "",
+        email: "",
+        passHash: "",
+        numAccounts: accounts.length,
+        selectedTheme: "default",
+        secretHash: encrypt(secretQuestion, secretAnswer),
       };
+      if (currAccount !== -1) {
+        newAccInfo.selectedTheme = accounts[currAccount].accState.selectedTheme;
+      }
       setSecretQuestion("Select a Secret Question");
       setSecretAnswer("");
-      dispatch(getExistingAccountAsync(data));
-      dispatch(setLoginAnonymouslyDialogOpen(false));
+      dispatch(createAccountAsync(newAccInfo));
+      dispatch(setCreateAnonymousDialogOpen(false));
     }
   };
 
@@ -50,12 +58,12 @@ function LoginAnonymouslyDialog() {
   };
 
   return (
-    <Dialog open={dialogOpen} onClose={(event) => dispatch(setLoginAnonymouslyDialogOpen(false))} sx={{ overflow: "hidden" }}>
+    <Dialog open={dialogOpen} onClose={(event) => dispatch(setCreateAnonymousDialogOpen(false))} sx={{ overflow: "hidden" }}>
       <DialogTitle>Add a New Anonymous Account</DialogTitle>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Paper elevation={3} sx={{ padding: 2, margin: 3, marginRight: 1.5, width: "250px" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <DialogContentText variant="subtitle2">The Secret Question of your Account</DialogContentText>
+            <DialogContentText variant="subtitle2">Secret Question</DialogContentText>
             <br />
             {secretQuestion === "Select a Secret Question" ? (
               <div>
@@ -77,17 +85,17 @@ function LoginAnonymouslyDialog() {
         </Paper>
         <Paper elevation={3} sx={{ padding: 2, margin: 3, marginLeft: 1.5, width: "250px" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <DialogContentText variant="subtitle2">The Username of Your Account</DialogContentText>
+            <DialogContentText variant="subtitle2">A Username for your Account</DialogContentText>
             <br />
             <TextField fullWidth={true} autoFocus={true} label="Username" type="text" variant="outlined" onChange={(event) => changedUsername(event)} />
           </div>
         </Paper>
       </div>
-      <Button sx={{ margin: 3, padding: 2 }} variant="contained" onClick={loginAnonymously}>
-        Login Anonymously
+      <Button sx={{ margin: 3, padding: 2 }} variant="contained" onClick={singupAnonymously}>
+        Create Anonymous Account
       </Button>
     </Dialog>
   );
 }
 
-export default LoginAnonymouslyDialog;
+export default CreateAnonymousDialog;

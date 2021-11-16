@@ -19,15 +19,18 @@ function App() {
 
   React.useEffect(() => {
     dispatch(refreshServerIp("44.194.181.255"));
+    // IMPLEMENT MULTIPLE STORED COOKIES FOR ALL ANONYMOUS ACCOUNTS
+    /*
     if (cookies.get("anonymousAccountExists")) {
       // Proceed to add the account to the list as it already exists
       const data = {
-        serverIp: "44.194.181.255",
+        method: "uuid",
         uuid: cookies.get("anonymousUUID"),
         numAccounts: accounts.length,
       };
       dispatch(getExistingAccountAsync(data));
     }
+    */
   }, []);
 
   return (

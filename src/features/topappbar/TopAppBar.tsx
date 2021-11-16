@@ -6,6 +6,7 @@ import { setAddAccountDialogOpen } from "../../app/appstate/appSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AvatarTemplate from "../../avatarTemplate.jpg";
 import AddAccountDialog from "./AddAccountDialog";
+import CreateAnonymousDialog from "./CreateAnonymousDialog";
 import LoginAnonymouslyDialog from "./LoginAnonymouslyDialog";
 import "./TopAppBar.scss";
 
@@ -163,8 +164,9 @@ function TopAppBar() {
             Chatimus
           </Typography>
           <AccountsButton accounts={accounts} currAccount={currAccount} />
-          <LoginAnonymouslyDialog />
           <AddAccountDialog />
+          <CreateAnonymousDialog />
+          <LoginAnonymouslyDialog />
         </Toolbar>
       </AppBar>
     </Box>
