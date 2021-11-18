@@ -16,24 +16,17 @@ function CreateAnonymousDialog() {
   const [secretAnswer, setSecretAnswer] = React.useState("");
   const dispatch = useAppDispatch();
 
-  function encrypt(secretQuestion: string, secretAnswer: string) {
-    return crypto.AES.encrypt(secretQuestion, secretAnswer).toString();
-    // const bytes = crypto.AES.decrypt(hash, secretAnswer).toString(crypto.enc.Utf8);
-  }
-
   const singupAnonymously = () => {
     if (secretQuestion !== "Select a Secret Question") {
       let newAccInfo = {
         accType: "anonymous",
         username: username,
-        serverIp: serverIp,
-        hasPfp: false,
-        pfpBase64: "",
         email: "",
         passHash: "",
         numAccounts: accounts.length,
         selectedTheme: "default",
-        secretHash: encrypt(secretQuestion, secretAnswer),
+        secretQuestion: secretQuestion,
+        secretAnswer: secretAnswer,
       };
       if (currAccount !== -1) {
         newAccInfo.selectedTheme = accounts[currAccount].accState.selectedTheme;

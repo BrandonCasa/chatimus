@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import BCrypt from "bcrypt";
+
+const saltRounds = 10;
 
 export interface AccountInfo {
   username: string;
@@ -50,45 +53,50 @@ const initialState: AccountsState = {
 };
 
 export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync", async (payload: any, { dispatch }) => {
-  const newAcc = {
-    accType: payload.accType,
-    username: payload.username,
-    email: payload.email,
-    passHash: payload.passHash,
-    uuid: "",
-    hasPfp: payload.hasPfp,
-    pfpBase64: payload.pfpBase64,
-    selectedTheme: payload.selectedTheme,
-    secretHash: payload.secretHash,
-  };
-  const cookies = new Cookies();
-  let axiosResultA;
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-    axiosResultA = await axios.post(`http://selfrtx.com:3001/api/accounts/create`, newAcc);
-  } else {
-    axiosResultA = await axios.post(`https://selfrtx.com:3000/api/accounts/create`, newAcc);
-  }
-  console.log(axiosResultA.data);
-  cookies.set("anonymousAccountExists", true);
-  cookies.set("anonymousUUID", axiosResultA.data.uuid);
-  let newUUID = axiosResultA.data.uuid;
-  console.log("Saved New User");
-  const newUser: Account = {
-    accInfo: {
+  if (payload.accType === "anonymous") {
+    let { err, secretHash } = await BCrypt.hash(payload.secretQuestion + payload.secretAnswer, saltRounds);
+
+    const newAcc = {
+      accType: payload.accType,
       username: payload.username,
-      uuid: newUUID,
-      email: "",
-      hasPfp: payload.hasPfp,
-      pfpBase64: payload.pfpBase64,
-    },
-    accState: {
-      loggedIn: true,
-      status: 0,
+      email: payload.email,
+      passHash: payload.passHash,
+      hasPfp: false,
+      pfpBase64: "",
       selectedTheme: payload.selectedTheme,
-    },
-  };
-  await dispatch(addAccount(newUser));
-  await dispatch(setCurrentAccount(payload.numAccounts));
+      secretHash: secretHash,
+    };
+    const cookies = new Cookies();
+    let axiosResultA;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+      axiosResultA = await axios.post(`http://selfrtx.com:3001/api/accounts/create`, newAcc);
+    } else {
+      axiosResultA = await axios.post(`https://selfrtx.com:3000/api/accounts/create`, newAcc);
+    }
+    console.log(axiosResultA.data);
+    cookies.set("anonymousAccountExists", true);
+    cookies.set("anonymousUUID", axiosResultA.data.uuid);
+    let newUUID = axiosResultA.data.uuid;
+    console.log("Saved New User");
+    const newUser: Account = {
+      accInfo: {
+        username: payload.username,
+        uuid: newUUID,
+        email: "",
+        hasPfp: payload.hasPfp,
+        pfpBase64: payload.pfpBase64,
+      },
+      accState: {
+        loggedIn: true,
+        status: 0,
+        selectedTheme: payload.selectedTheme,
+      },
+    };
+    await dispatch(addAccount(newUser));
+    await dispatch(setCurrentAccount(payload.numAccounts));
+  } else {
+    // other account types
+  }
   return;
 });
 
@@ -116,13 +124,13 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
         username: axiosResultA.data.username,
         uuid: axiosResultA.data.uuid,
         email: axiosResultA.data.email,
-        hasPfp: axiosResultA.data.hasPfp,
-        pfpBase64: axiosResultA.data.pfpBase64,
+        hasPfp: axiosResultA.data.accPlainData.hasPfp,
+        pfpBase64: axiosResultA.data.accPlainData.pfpBase64,
       },
       accState: {
         loggedIn: true,
         status: 0,
-        selectedTheme: axiosResultA.data.selectedTheme,
+        selectedTheme: axiosResultA.data.accPlainData.selectedTheme,
       },
     };
     await dispatch(addAccount(existingUser));
@@ -154,13 +162,13 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
         username: axiosResultA.data.username,
         uuid: axiosResultA.data.uuid,
         email: axiosResultA.data.email,
-        hasPfp: axiosResultA.data.hasPfp,
-        pfpBase64: axiosResultA.data.pfpBase64,
+        hasPfp: axiosResultA.data.accPlainData.hasPfp,
+        pfpBase64: axiosResultA.data.accPlainData.pfpBase64,
       },
       accState: {
         loggedIn: true,
         status: 0,
-        selectedTheme: axiosResultA.data.selectedTheme,
+        selectedTheme: axiosResultA.data.accPlainData.selectedTheme,
       },
     };
     await dispatch(addAccount(existingUser));
