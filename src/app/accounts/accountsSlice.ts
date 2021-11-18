@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import BCrypt from "bcrypt";
+const BCrypt = require("bcryptjs");
 
 const saltRounds = 10;
 
@@ -54,7 +54,8 @@ const initialState: AccountsState = {
 
 export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync", async (payload: any, { dispatch }) => {
   if (payload.accType === "anonymous") {
-    let { err, secretHash } = await BCrypt.hash(payload.secretQuestion + payload.secretAnswer, saltRounds);
+    let salt = BCrypt.genSaltSync(saltRounds);
+    let secretHash = BCrypt.hashSync(payload.secretQuestion + payload.secretAnswer, salt);
 
     const newAcc = {
       accType: payload.accType,
@@ -124,13 +125,13 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
         username: axiosResultA.data.username,
         uuid: axiosResultA.data.uuid,
         email: axiosResultA.data.email,
-        hasPfp: axiosResultA.data.accPlainData.hasPfp,
-        pfpBase64: axiosResultA.data.accPlainData.pfpBase64,
+        hasPfp: axiosResultA.data.hasPfp,
+        pfpBase64: axiosResultA.data.pfpBase64,
       },
       accState: {
         loggedIn: true,
         status: 0,
-        selectedTheme: axiosResultA.data.accPlainData.selectedTheme,
+        selectedTheme: axiosResultA.data.selectedTheme,
       },
     };
     await dispatch(addAccount(existingUser));
@@ -162,13 +163,13 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
         username: axiosResultA.data.username,
         uuid: axiosResultA.data.uuid,
         email: axiosResultA.data.email,
-        hasPfp: axiosResultA.data.accPlainData.hasPfp,
-        pfpBase64: axiosResultA.data.accPlainData.pfpBase64,
+        hasPfp: axiosResultA.data.hasPfp,
+        pfpBase64: axiosResultA.data.pfpBase64,
       },
       accState: {
         loggedIn: true,
         status: 0,
-        selectedTheme: axiosResultA.data.accPlainData.selectedTheme,
+        selectedTheme: axiosResultA.data.selectedTheme,
       },
     };
     await dispatch(addAccount(existingUser));
@@ -188,7 +189,6 @@ export const accountsSlice = createSlice({
       state.data.accounts[state.data.currAccount].accInfo.hasPfp = true;
     },
     addAccount: (state, action: PayloadAction<Account>) => {
-      console.log(action.payload);
       let foundAcc = state.data.accounts.find((acc) => acc.accInfo.uuid === action.payload.accInfo.uuid);
       if (foundAcc === undefined) {
         state.data.accounts.push(action.payload);

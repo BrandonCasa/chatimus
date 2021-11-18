@@ -16,11 +16,6 @@ function LoginAnonymouslyDialog() {
   const [secretAnswer, setSecretAnswer] = React.useState("");
   const dispatch = useAppDispatch();
 
-  function encrypt(secretQuestion: string, secretAnswer: string) {
-    return crypto.AES.encrypt(secretQuestion, secretAnswer).toString();
-    // const bytes = crypto.AES.decrypt(hash, secretAnswer).toString(crypto.enc.Utf8);
-  }
-
   const loginAnonymously = () => {
     if (secretQuestion !== "Select a Secret Question") {
       const data = {
