@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "universal-cookie";
 const BCrypt = require("bcryptjs");
@@ -15,7 +15,6 @@ export interface AccountInfo {
 // Status
 // 0=ONLINE, 1=OFFLINE, 2=LIGHTLY_DISTURB, 3=DO_NOT_DISTURB
 export interface AccountState {
-  loggedIn: boolean;
   status: number;
   selectedTheme: string;
 }
@@ -103,7 +102,6 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
         pfpBase64: payload.pfpBase64,
       },
       accState: {
-        loggedIn: true,
         status: 0,
         selectedTheme: payload.selectedTheme,
       },
@@ -144,7 +142,6 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
         pfpBase64: axiosResultA.data.pfpBase64,
       },
       accState: {
-        loggedIn: true,
         status: 0,
         selectedTheme: axiosResultA.data.selectedTheme,
       },
@@ -182,7 +179,6 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
         pfpBase64: axiosResultA.data.pfpBase64,
       },
       accState: {
-        loggedIn: true,
         status: 0,
         selectedTheme: axiosResultA.data.selectedTheme,
       },
@@ -228,13 +224,17 @@ export const accountsSlice = createSlice({
         state.data.accounts.push(action.payload);
       } else {
         state.data.currAccount = state.data.accounts.indexOf(foundAcc);
-        state.data.accounts[state.data.accounts.indexOf(foundAcc)].accState.loggedIn = true;
       }
     },
     removeAccount: (state, action: PayloadAction<number>) => {
-      if (state.data.currAccount === action.payload) {
-        state.data.currAccount -= 1;
-      }
+      const cookies = new Cookies();
+
+      let savedAccounts = cookies.get("savedAccounts");
+      let currState = current(state);
+      let savedAccountIndex = savedAccounts.accounts.findIndex((acc: any) => acc.uuid === currState.data.accounts[currState.data.currAccount].accInfo.uuid);
+      savedAccounts.accounts.splice(savedAccountIndex, 1);
+      cookies.set("savedAccounts", savedAccounts);
+      state.data.currAccount -= 1;
       state.data.accounts.splice(action.payload, 1);
     },
     setCurrentAccount: (state, action: PayloadAction<number>) => {
@@ -251,9 +251,6 @@ export const accountsSlice = createSlice({
     setStatus: (state, action: PayloadAction<number>) => {
       state.data.accounts[state.data.currAccount].accState.status = action.payload;
     },
-    setLoggedIn: (state, action: PayloadAction<boolean>) => {
-      state.data.accounts[state.data.currAccount].accState.loggedIn = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(createAccountAsync.fulfilled, (state, action) => {
@@ -263,7 +260,7 @@ export const accountsSlice = createSlice({
   },
 });
 
-export const { addAccount, removeAccount, setCurrentAccount, setUsername, setEmail, setStatus, setLoggedIn } = accountsSlice.actions;
+export const { addAccount, removeAccount, setCurrentAccount, setUsername, setEmail, setStatus } = accountsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 //export const selectAccounts = (state: RootState) => state.accounts.data;

@@ -1,7 +1,7 @@
-import { AddCircleOutlineRounded, LockOpenRounded, LockRounded, NoAccountsRounded } from "@mui/icons-material";
+import { AddCircleOutlineRounded, DeleteRounded, LockRounded, NoAccountsRounded } from "@mui/icons-material";
 import { AppBar, Avatar, Box, Button, ButtonBase, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import * as React from "react";
-import { Account, setCurrentAccount, setLoggedIn } from "../../app/accounts/accountsSlice";
+import { Account, setCurrentAccount, removeAccount } from "../../app/accounts/accountsSlice";
 import { setAddAccountDialogOpen } from "../../app/appstate/appSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import AvatarTemplate from "../../avatarTemplate.jpg";
@@ -32,25 +32,10 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
   const dispatch = useAppDispatch();
 
   function clickAccount(account: Account) {
-    if (account.accState.loggedIn) {
-      dispatch(setCurrentAccount(props.accounts.indexOf(account)));
-    }
+    dispatch(setCurrentAccount(props.accounts.indexOf(account)));
   }
-  function clickLogOut(accountA: Account) {
-    if (accountA.accState.loggedIn) {
-      dispatch(setLoggedIn(false));
-      let shouldGoAnon = true;
-      props.accounts.forEach((accountB: Account, index: number) => {
-        if (accountB.accState.loggedIn && accountB.accInfo.uuid !== accountA.accInfo.uuid) {
-          shouldGoAnon = false;
-          dispatch(setCurrentAccount(index));
-        }
-      });
-      console.log(shouldGoAnon);
-      if (shouldGoAnon) {
-        dispatch(setCurrentAccount(-1));
-      }
-    }
+  function clickRemove(toRemove: number) {
+    dispatch(removeAccount(toRemove));
   }
 
   return (
@@ -64,7 +49,6 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
             <ListItemText>{account.accInfo.username}</ListItemText>
             <ListItemIcon>
               <div style={{ flexGrow: 1 }} />
-              {account.accState.loggedIn ? <LockOpenRounded color="secondary" style={{ width: "20px", height: "20px" }} /> : <LockRounded color="warning" style={{ width: "20px", height: "20px" }} />}
             </ListItemIcon>
           </MenuItem>
         );
@@ -87,11 +71,11 @@ function AccountDropdownMenu(props: AccountDropdownMenuProps) {
         </MenuItem>
       ) : null}
       {props.accounts.length > 0 && props.currAccount !== -1 ? (
-        <MenuItem onClick={() => clickLogOut(props.accounts[props.currAccount])}>
+        <MenuItem onClick={() => clickRemove(props.currAccount)}>
           <ListItemIcon>
-            <LockRounded color="secondary" fontSize="small" />
+            <DeleteRounded color="secondary" fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Lock Current</ListItemText>
+          <ListItemText>Remove Current</ListItemText>
         </MenuItem>
       ) : null}
     </Menu>
