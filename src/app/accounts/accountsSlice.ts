@@ -75,8 +75,23 @@ export const createAccountAsync = createAsyncThunk("accounts/createAccountAsync"
       axiosResultA = await axios.post(`https://selfrtx.com:3000/api/accounts/create`, newAcc);
     }
     console.log(axiosResultA.data);
-    cookies.set("anonymousAccountExists", true);
-    cookies.set("anonymousUUID", axiosResultA.data.uuid);
+    let savedAccounts = cookies.get("savedAccounts");
+    if (savedAccounts !== undefined) {
+      savedAccounts.accounts.push({
+        accType: payload.accType,
+        uuid: axiosResultA.data.uuid,
+      });
+      cookies.set("savedAccounts", savedAccounts);
+    } else {
+      cookies.set("savedAccounts", {
+        accounts: [
+          {
+            accType: payload.accType,
+            uuid: axiosResultA.data.uuid,
+          },
+        ],
+      });
+    }
     let newUUID = axiosResultA.data.uuid;
     console.log("Saved New User");
     const newUser: Account = {
@@ -174,6 +189,25 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
     };
     await dispatch(addAccount(existingUser));
     await dispatch(setCurrentAccount(payload.numAccounts));
+    const cookies = new Cookies();
+
+    let savedAccounts = cookies.get("savedAccounts");
+    if (savedAccounts !== undefined) {
+      savedAccounts.accounts.push({
+        accType: axiosResultA.data.accType,
+        uuid: axiosResultA.data.uuid,
+      });
+      cookies.set("savedAccounts", savedAccounts);
+    } else {
+      cookies.set("savedAccounts", {
+        accounts: [
+          {
+            accType: axiosResultA.data.accType,
+            uuid: axiosResultA.data.uuid,
+          },
+        ],
+      });
+    }
     return;
   }
 });

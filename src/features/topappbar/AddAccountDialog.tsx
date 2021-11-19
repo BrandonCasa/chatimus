@@ -83,8 +83,7 @@ function AddAccountDialog() {
         <Button
           onClick={() => {
             const cookies = new Cookies();
-            cookies.remove("anonymousAccountExists");
-            cookies.remove("anonymousUUID");
+            cookies.remove("savedAccounts");
           }}
         >
           Remove Stored Anonymous Account

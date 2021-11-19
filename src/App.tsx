@@ -19,6 +19,19 @@ function App() {
 
   React.useEffect(() => {
     dispatch(refreshServerIp("44.194.181.255"));
+    let savedAccounts = cookies.get("savedAccounts");
+    console.log(savedAccounts);
+    if (savedAccounts !== undefined) {
+      savedAccounts.accounts.forEach((acc: any) => {
+        const data = {
+          method: "uuid",
+          accType: "anonymous",
+          uuid: acc.uuid,
+          numAccounts: accounts.length,
+        };
+        dispatch(getExistingAccountAsync(data));
+      });
+    }
     // IMPLEMENT MULTIPLE STORED COOKIES FOR ALL ANONYMOUS ACCOUNTS
     /*
     if (cookies.get("anonymousAccountExists")) {
