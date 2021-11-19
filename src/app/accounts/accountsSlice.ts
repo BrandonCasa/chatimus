@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Cookies from "universal-cookie";
 const BCrypt = require("bcryptjs");
 
@@ -150,7 +150,7 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
     await dispatch(setCurrentAccount(payload.numAccounts));
     return;
   } else {
-    let axiosResultA;
+    let axiosResultA: AxiosResponse<any, any>;
     if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
       axiosResultA = await axios.get(`http://selfrtx.com:3001/api/accounts/get/secret`, {
         params: {
@@ -189,10 +189,11 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
 
     let savedAccounts = cookies.get("savedAccounts");
     if (savedAccounts !== undefined) {
-      savedAccounts.accounts.push({
-        accType: axiosResultA.data.accType,
-        uuid: axiosResultA.data.uuid,
-      });
+      if (savedAccounts.accounts.findIndex((acc: any) => acc.uuid === axiosResultA.data.uuid) === -1)
+        savedAccounts.accounts.push({
+          accType: axiosResultA.data.accType,
+          uuid: axiosResultA.data.uuid,
+        });
       cookies.set("savedAccounts", savedAccounts);
     } else {
       cookies.set("savedAccounts", {
