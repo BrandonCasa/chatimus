@@ -58,13 +58,6 @@ function App() {
             <Route path="/" exact>
               <HomePage />
             </Route>
-            <Route path="/hub" exact>
-              {
-                // @ts-ignore
-                //this.state.dbLoaded.toString()
-              }
-              <HomePage />
-            </Route>
             <Route path="/servers" exact></Route>
           </main>
           <footer>

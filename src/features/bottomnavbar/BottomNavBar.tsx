@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 function BottomNavBar() {
   let history = useHistory();
   let initialHistoryVal = -1;
-  if (history.location.pathname === "/hub") initialHistoryVal = 0;
+  if (history.location.pathname === "/") initialHistoryVal = 0;
   if (history.location.pathname === "/servers") initialHistoryVal = 1;
   const [value, setValue] = React.useState(initialHistoryVal);
 
@@ -26,10 +26,11 @@ function BottomNavBar() {
           setValue(newValue);
           switch (newValue) {
             case 0:
-              history.push("/hub");
+              history.push("/");
               break;
             case 1:
               history.push("/servers");
+              break;
           }
         }}
       >
