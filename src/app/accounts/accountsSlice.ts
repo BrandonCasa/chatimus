@@ -135,15 +135,15 @@ export const getExistingAccountAsync = createAsyncThunk("accounts/getExistingAcc
     }
     const existingUser: Account = {
       accInfo: {
-        username: axiosResultA.data.username,
-        uuid: axiosResultA.data.uuid,
-        email: axiosResultA.data.email,
-        hasPfp: axiosResultA.data.hasPfp,
-        pfpBase64: axiosResultA.data.pfpBase64,
+        username: axiosResultA.data.accData.username,
+        uuid: axiosResultA.data.accData.uuid,
+        email: axiosResultA.data.accData.email,
+        hasPfp: axiosResultA.data.accData.accPlainData.hasPfp,
+        pfpBase64: axiosResultA.data.accData.accPlainData.pfpBase64,
       },
       accState: {
         status: 0,
-        selectedTheme: axiosResultA.data.selectedTheme,
+        selectedTheme: axiosResultA.data.accData.accPlainData.selectedTheme,
       },
     };
     await dispatch(addAccount(existingUser));
