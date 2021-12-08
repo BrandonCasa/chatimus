@@ -57,7 +57,11 @@ function HomePage(props: ServersPageProps) {
   return (
     <Card sx={{ maxWidth: 345 }} className="ServerCard">
       <CardHeader
-        avatar={<Avatar>R</Avatar>}
+        avatar={
+          <Avatar style={{ backgroundColor: "transparent" }}>
+            <img src={"/images/cards/getquakedon.gif"} width="32" height="32" alt="err" />
+          </Avatar>
+        }
         action={
           <IconButton>
             <MoreVertIcon style={{ color: "#fff" }} />
