@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import BottomNavBar from "./features/bottomnavbar/BottomNavBar";
 import TopAppBar from "./features/topappbar/TopAppBar";
 import HomePage from "./pages/home/HomePage";
+import ServersPage from "./pages/servers/ServersPage";
 import themeDarkModeA from "./themes/DarkModeA";
 
 function App() {
@@ -56,7 +57,9 @@ function App() {
             <Route path="/" exact>
               <HomePage />
             </Route>
-            <Route path="/servers" exact></Route>
+            <Route path="/servers" exact>
+              <ServersPage />
+            </Route>
           </main>
           <footer>
             <BottomNavBar />

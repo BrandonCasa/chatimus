@@ -1,5 +1,5 @@
 import { DeleteRounded } from "@mui/icons-material";
-import { AppBar, Avatar, Button, Checkbox, Chip, FormControlLabel, FormGroup, List, ListItem, ListItemAvatar, ListItemText, Paper, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Button, Checkbox, Chip, Divider, FormControlLabel, FormGroup, List, ListItem, ListItemAvatar, ListItemText, Paper, Stack, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { addNotification, Notification as NotificationType } from "../../../app/notifications/notificationsSlice";
@@ -78,7 +78,7 @@ function QuickNotifications(props: QuickNotificationsProps) {
       >
         {notifications.map((notif: NotificationType, index: number) => {
           if (showAllBool || (currentAccount !== -1 && notif.owner === accountsList[currentAccount].accInfo.uuid)) {
-            return <Notification key={index} info={notif} showAccount={showAllBool} />;
+            return <Notification key={index} info={notif} showAccount={showAllBool} notifType={"quick"} />;
           } else {
             return <div key={index} />;
           }
