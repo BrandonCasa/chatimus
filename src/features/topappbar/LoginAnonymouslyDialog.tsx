@@ -8,7 +8,6 @@ import crypto from "crypto-js";
 
 function LoginAnonymouslyDialog() {
   const dialogOpen = useAppSelector((state) => state.appstate.data.loginAnonymouslyDialogOpen);
-  const serverIp = useAppSelector((state) => state.appstate.data.currentServerIp);
   const accounts = useAppSelector((state) => state.accounts.data.accounts);
   const currAccount = useAppSelector((state) => state.accounts.data.currAccount);
   const [username, setUsername] = React.useState("");

@@ -4,7 +4,6 @@ interface AppStateData {
   addAccountDialogOpen: boolean;
   loginAnonymouslyDialogOpen: boolean;
   createAnonymousDialogOpen: boolean;
-  currentServerIp: string;
 }
 
 // Define a type for the slice state
@@ -18,7 +17,6 @@ const initialState: AppState = {
     addAccountDialogOpen: false,
     loginAnonymouslyDialogOpen: false,
     createAnonymousDialogOpen: false,
-    currentServerIp: "",
   },
 };
 
@@ -39,13 +37,9 @@ export const notificationsSlice = createSlice({
       state.data.createAnonymousDialogOpen = action.payload;
       return;
     },
-    refreshServerIp: (state, action: PayloadAction<string>) => {
-      state.data.currentServerIp = action.payload;
-      return;
-    },
   },
 });
 
-export const { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen, refreshServerIp, setCreateAnonymousDialogOpen } = notificationsSlice.actions;
+export const { setAddAccountDialogOpen, setLoginAnonymouslyDialogOpen, setCreateAnonymousDialogOpen } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

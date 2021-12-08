@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Cookies from "universal-cookie";
 import "./App.scss";
 import { getExistingAccountAsync } from "./app/accounts/accountsSlice";
-import { refreshServerIp } from "./app/appstate/appSlice";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import BottomNavBar from "./features/bottomnavbar/BottomNavBar";
 import TopAppBar from "./features/topappbar/TopAppBar";
@@ -18,7 +17,6 @@ function App() {
   const cookies = new Cookies();
 
   React.useEffect(() => {
-    dispatch(refreshServerIp("44.194.181.255"));
     let savedAccounts = cookies.get("savedAccounts");
     console.log(savedAccounts);
     if (savedAccounts !== undefined) {
