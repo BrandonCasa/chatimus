@@ -1,4 +1,4 @@
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, List, Typography } from "@mui/material";
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, IconButtonProps, List, Typography, Stack, Chip } from "@mui/material";
 import React, { useState } from "react";
 import { MoreVertRounded as MoreVertIcon, FavoriteRounded as FavoriteIcon, ShareRounded as ShareIcon, ExpandMoreRounded as ExpandMoreIcon } from "@mui/icons-material";
 import "./ServersPage.scss";
@@ -72,9 +72,10 @@ function HomePage(props: ServersPageProps) {
       />
       <CardMedia component="img" height="194" image="/images/cards/getquakedon.jpg" alt="Paella dish" />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          Put recent chat history of general here. (WIP)
-        </Typography>
+        <Stack direction="row" spacing={1}>
+          <Chip label={<Typography variant="subtitle1">Streamer</Typography>} variant="outlined" className="twitchChip" />
+          <Chip label={<Typography variant="subtitle1">Overwatch</Typography>} variant="outlined" />
+        </Stack>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton>
