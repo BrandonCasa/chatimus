@@ -53,7 +53,7 @@ function App() {
           <header>
             <TopAppBar />
           </header>
-          <main style={{ padding: 8, flexGrow: 1 }}>
+          <main style={{ padding: 4, flexGrow: 1 }}>
             <Route path="/" exact>
               <HomePage />
             </Route>
