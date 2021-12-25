@@ -31,6 +31,9 @@ function BottomNavBar() {
             case 1:
               history.push("/servers");
               break;
+            case 2:
+              history.push("/chats");
+              break;
           }
         }}
       >

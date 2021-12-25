@@ -18,12 +18,6 @@ function ServersPage(props: ServersPageProps) {
       <Server />
       <Server />
       <Server />
-      <Server />
-      <Server />
-      <Server />
-      <Server />
-      <Server />
-      <Server />
     </div>
   );
 }

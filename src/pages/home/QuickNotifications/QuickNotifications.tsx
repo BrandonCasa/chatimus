@@ -50,7 +50,7 @@ function QuickNotifications(props: QuickNotificationsProps) {
   }
 
   return (
-    <Paper sx={{ overflow: "hidden", maxWidth: 800 }}>
+    <Paper style={{ margin: 4 }} sx={{ overflow: "hidden", maxWidth: 800 }}>
       {/* A toolbar with a title saying "Notifications" and a delete icon button */}
       <AppBar color="secondary" position="static" elevation={0}>
         <Toolbar variant="dense" sx={{ justifyContent: "space-between" }}>
